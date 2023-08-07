@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   background-size: cover;
-  background-image: url("/image/wp3906251-snake-game-wallpapers.jpg");
+  background-image: url("image/wp3906251-snake-game-wallpapers.jpg");
 }
 
 .snake-board {
@@ -38,7 +38,7 @@
 }
 
 .snake-head {
-  background-image: url("/image/snakeHead.jpg");
+  background-image: url("image/snakeHead.jpg");
   /* background-size: cover; */
   background-size: contain;
   background-repeat: no-repeat;
@@ -55,17 +55,17 @@
 
 .snake-food-1{
   border-radius: 50%;
-  background-image: url("/image/Apple.jpg");
+  background-image: url("image/Apple.jpg");
   background-size: cover;
 }
 .snake-food-2{
   border-radius: 50%;
-  background-image: url("/image/banana.jpg");
+  background-image: url("image/banana.jpg");
   background-size: cover;
 }
 .snake-food-3{
   border-radius: 50%;
-  background-image: url("/image/guava.jpg");
+  background-image: url("image/guava.jpg");
   background-size: cover;
 }
 
