@@ -5,9 +5,9 @@ const scoreBoard = document.getElementById("score-board");
 const highScoreBoard = document.getElementById("highscore-board");
 const playAgain = document.getElementById("btn");
 const gameOver = document.getElementsByClassName("game-over")[0];
-const foodSound = new Audio("/sounds/eating-sound-effect-36186.mp3");
-const gameOverSound = new Audio("/sounds/videogame-death-sound-43894.mp3");
-const cheerSound = new Audio("/sounds/Cheers.mp3");
+const foodSound = new Audio("sounds/eating-sound-effect-36186.mp3");
+const gameOverSound = new Audio("sounds/videogame-death-sound-43894.mp3");
+const cheerSound = new Audio("sounds/Cheers.mp3");
 //Not to take any events when the game is over
 let collided = false;
 
