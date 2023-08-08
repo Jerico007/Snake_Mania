@@ -28,10 +28,6 @@ let inputDirection = { x: 0, y: 0 };
 let snakeArr = [{ x: 9, y: 9 }];
 
 //Indicates snake Food co-ordinates
-// let food_1 = { x: 3, y: 5 };
-// let food_2 = { x: 7, y: 10 };
-// let food_3 = { x: 1, y: 14 };
-
 let foods = [{x:3 , y :5}, { x: 7, y: 10 }, { x: 1, y: 14 }];
 
 //Snake moving speed in milliseconds
