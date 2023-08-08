@@ -28,22 +28,21 @@ let inputDirection = { x: 0, y: 0 };
 let snakeArr = [{ x: 9, y: 9 }];
 
 //Indicates snake Food co-ordinates
-let food_1 = { x: 3, y: 5 };
-let food_2 = { x: 7, y: 10 };
-let food_3 = { x: 1, y: 14 };
+// let food_1 = { x: 3, y: 5 };
+// let food_2 = { x: 7, y: 10 };
+// let food_3 = { x: 1, y: 14 };
 
-let lastPaintTime = 0;
+let foods = [{x:3 , y :5}, { x: 7, y: 10 }, { x: 1, y: 14 }];
 
-//Snake moving speed
-let speed = 4;
+//Snake moving speed in milliseconds
+let speed = 120;
 //Game Functions
-function main(cTime) {
-  window.requestAnimationFrame(main);
-  if ((cTime - lastPaintTime) / 1000 < 1 / speed) {
-    return;
-  }
-  lastPaintTime = cTime;
-
+function main(ctime) {
+  //Set Time out will call requestAnimation after every speed ms(Milli Seconds)
+  console.log(ctime);
+  setTimeout(() => {
+    window.requestAnimationFrame(main);
+  }, speed);
   gameEngine();
 }
 
@@ -66,8 +65,37 @@ function snakeCollide(snakeArr) {
   return false;
 }
 
+//Modify the location of the food ,update the score board , and increase the size of the snake
+function modifySnakeBoard(food) {
+  snakeArr.unshift({
+    x: snakeArr[0].x + inputDirection.x,
+    y: snakeArr[0].y + inputDirection.y,
+  });
+  //Generating random food particles in the board
+  food.x = Math.floor(Math.random() * 17) + 2;
+  food.y = Math.floor(Math.random() * 17) + 2;
+  //Updatting score
+  score += 1;
+  scoreBoard.innerText = `Score: ${score}`;
+  if (score > highScore && !highScoreBeaten && !FirstGame) {
+    cheerSound.play();
+    highScoreBeaten = true;
+  }
+  //Updatting HighScore
+  if (highScore < score) {
+    highScore += 1;
+  }
+  highScoreBoard.innerText = `High Score: ${highScore}`;
+  //Increasing the speed after eating the food
+  if (speed > 84) {
+    speed -= 1;
+  }
+  //Play the cheer sound when score becomes equal to highscore but not first game
+  foodSound.play();
+}
+
 function gameEngine() {
-  //Part 1: Update the snake array and food
+  //Part 1: Check if the snake Collided to itself if yes then GAMEOVER
   if (snakeCollide(snakeArr)) {
     gameOverSound.play();
     showScore.innerText = `You score: ${score}`;
@@ -75,11 +103,9 @@ function gameEngine() {
     collided = true;
     inputDirection = { x: 0, y: 0 };
     snakeArr = [{ x: 9, y: 9 }];
-    food_1 = { x: 3, y: 5 };
-    food_2 = { x: 7, y: 10 };
-    food_3 = { x: 1, y: 14 };
+    foods = [{x:3 , y :5}, { x: 7, y: 10 }, { x: 1, y: 14 }];
     score = 0;
-    speed = 4;
+    speed = 120;
     FirstGame = false;
     highScoreBeaten = false;
     scoreBoard.innerText = `Score: ${score}`;
@@ -93,103 +119,22 @@ function gameEngine() {
       collided = false;
     });
   }
-  // If snake has eaten the food grow the snakebody ,update the score and food co-ordinates
-  //If snake eat's food_1
-  if (snakeArr[0].x === food_1.x && snakeArr[0].y === food_1.y) {
-    snakeArr.unshift({
-      x: snakeArr[0].x + inputDirection.x,
-      y: snakeArr[0].y + inputDirection.y,
-    });
-    //Generating random food particles in the board
-    food_1 = {
-      x: Math.floor(Math.random() * 17) + 2,
-      y: Math.floor(Math.random() * 17) + 2,
-    };
 
-    //Updatting score
-    score += 1;
-    scoreBoard.innerText = `Score: ${score}`;
-    if (score > highScore && !highScoreBeaten && !FirstGame) {
-      cheerSound.play();
-      highScoreBeaten = true;
+   //To check if the snake eats the food
+   foods.forEach((val)=>{
+    if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
+      modifySnakeBoard(val);
+    } else if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
+      modifySnakeBoard(val);
+    } else if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
+      modifySnakeBoard(val);
     }
-    //Updatting HighScore
-    if (highScore < score) {
-      highScore += 1;
-    }
-    highScoreBoard.innerText = `High Score: ${highScore}`;
-    //Increasing the speed after eating the food
-    if (speed < 9) {
-      speed += 1;
-    }
-    //Play the cheer sound when score becomes equal to highscore but not first game
-    foodSound.play();
-  }//If snake eat's food_2 
-  else if (snakeArr[0].x === food_2.x && snakeArr[0].y === food_2.y) {
-    snakeArr.unshift({
-      x: snakeArr[0].x + inputDirection.x,
-      y: snakeArr[0].y + inputDirection.y,
-    });
-    //Generating random food particles in the board
-    food_2 = {
-      x: Math.floor(Math.random() * 17) + 2,
-      y: Math.floor(Math.random() * 17) + 2,
-    };
+  })
 
-    //Updatting score
-    score += 1;
-    scoreBoard.innerText = `Score: ${score}`;
-    if (score > highScore && !highScoreBeaten && !FirstGame) {
-      cheerSound.play();
-      highScoreBeaten = true;
-    }
-    //Updatting HighScore
-    if (highScore < score) {
-      highScore += 1;
-    }
-    highScoreBoard.innerText = `High Score: ${highScore}`;
-    //Increasing the speed after eating the food
-    if (speed < 9) {
-      speed += 1;
-    }
-    //Play the cheer sound when score becomes equal to highscore but not first game
-    foodSound.play();
-  }//If snake eat's food_3 
-  else if (snakeArr[0].x === food_3.x && snakeArr[0].y === food_3.y) {
-    snakeArr.unshift({
-      x: snakeArr[0].x + inputDirection.x,
-      y: snakeArr[0].y + inputDirection.y,
-    });
-    //Generating random food particles in the board
-    food_3 = {
-      x: Math.floor(Math.random() * 17) + 2,
-      y: Math.floor(Math.random() * 17) + 2,
-    };
-
-    //Updatting score
-    score += 1;
-    scoreBoard.innerText = `Score: ${score}`;
-    if (score > highScore && !highScoreBeaten && !FirstGame) {
-      cheerSound.play();
-      highScoreBeaten = true;
-    }
-    //Updatting HighScore
-    if (highScore < score) {
-      highScore += 1;
-    }
-    highScoreBoard.innerText = `High Score: ${highScore}`;
-    //Increasing the speed after eating the food
-    if (speed < 9) {
-      speed += 1;
-    }
-    //Play the cheer sound when score becomes equal to highscore but not first game
-    foodSound.play();
-  }
   //Move the snake
-  for (let i = snakeArr.length-2; i >= 0; i--) {
+  for (let i = snakeArr.length - 2; i >= 0; i--) {
     snakeArr[i + 1] = { ...snakeArr[i] };
   }
-
   //Add the new head of the current direction
   snakeArr[0].x += inputDirection.x;
   snakeArr[0].y += inputDirection.y;
@@ -208,24 +153,16 @@ function gameEngine() {
     snakeBoard.appendChild(snakeBody);
   });
 
-  //Part 3: Render the Food1
-  let snakeFood_1 = document.createElement("div");
-  snakeFood_1.className = `snake-food-1`;
-  snakeFood_1.style.gridColumnStart = food_1.x;
-  snakeFood_1.style.gridRowStart = food_1.y;
-  snakeBoard.appendChild(snakeFood_1);
-  //Render the Food2
-  let snakeFood_2 = document.createElement("div");
-  snakeFood_2.className = `snake-food-2`;
-  snakeFood_2.style.gridColumnStart = food_2.x;
-  snakeFood_2.style.gridRowStart = food_2.y;
-  snakeBoard.appendChild(snakeFood_2);
-  //Render the Food3
-  let snakeFood_3 = document.createElement("div");
-  snakeFood_3.className = `snake-food-3`;
-  snakeFood_3.style.gridColumnStart = food_3.x;
-  snakeFood_3.style.gridRowStart = food_3.y;
-  snakeBoard.appendChild(snakeFood_3);
+  //Part 3: Render the food
+  let num = 1;
+  foods.forEach((val)=>{
+    let snakeFood_1 = document.createElement("div");
+    snakeFood_1.className = `snake-food-${num}`;
+    snakeFood_1.style.gridColumnStart = val.x;
+    snakeFood_1.style.gridRowStart = val.y;
+    snakeBoard.appendChild(snakeFood_1);
+    num++;
+  })
 }
 
 //The gameLoop begins
