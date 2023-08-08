@@ -83,7 +83,7 @@ function modifySnakeBoard(food) {
   }
   highScoreBoard.innerText = `High Score: ${highScore}`;
   //Increasing the speed after eating the food
-  if (speed > 84) {
+  if (speed > 100) {
     speed -= 1;
   }
   //Play the cheer sound when score becomes equal to highscore but not first game
