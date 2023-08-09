@@ -28,7 +28,11 @@ let inputDirection = { x: 0, y: 0 };
 let snakeArr = [{ x: 9, y: 9 }];
 
 //Indicates snake Food co-ordinates
-let foods = [{x:3 , y :5}, { x: 7, y: 10 }, { x: 1, y: 14 }];
+let foods = [
+  { x: 3, y: 5 },
+  { x: 7, y: 10 },
+  { x: 1, y: 14 },
+];
 
 //Snake moving speed in milliseconds
 let speed = 120;
@@ -99,7 +103,10 @@ function gameEngine() {
     collided = true;
     inputDirection = { x: 0, y: 0 };
     snakeArr = [{ x: 9, y: 9 }];
-    foods = [{x:3 , y :5}, { x: 7, y: 10 }, { x: 1, y: 14 }];
+    foods.forEach((val) => {
+      val.x = Math.floor(Math.random() * 17) + 2;
+      val.y = Math.floor(Math.random() * 17) + 2;
+    });
     score = 0;
     speed = 120;
     FirstGame = false;
@@ -116,8 +123,8 @@ function gameEngine() {
     });
   }
 
-   //To check if the snake eats the food
-   foods.forEach((val)=>{
+  //To check if the snake eats the food
+  foods.forEach((val) => {
     if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
       modifySnakeBoard(val);
     } else if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
@@ -125,7 +132,7 @@ function gameEngine() {
     } else if (snakeArr[0].x === val.x && snakeArr[0].y === val.y) {
       modifySnakeBoard(val);
     }
-  })
+  });
 
   //Move the snake
   for (let i = snakeArr.length - 2; i >= 0; i--) {
@@ -139,8 +146,8 @@ function gameEngine() {
   snakeBoard.innerHTML = "";
   snakeArr.forEach((val, index) => {
     let snakeBody = document.createElement("div");
-    snakeBody.style.gridColumnStart = val.x;
-    snakeBody.style.gridRowStart = val.y;
+    snakeBody.style.gridColumnStart = val.y;
+    snakeBody.style.gridRowStart = val.x;
     if (index === 0) {
       snakeBody.className = "snake-head";
     } else {
@@ -151,14 +158,14 @@ function gameEngine() {
 
   //Part 3: Render the food
   let num = 1;
-  foods.forEach((val)=>{
+  foods.forEach((val) => {
     let snakeFood_1 = document.createElement("div");
     snakeFood_1.className = `snake-food-${num}`;
-    snakeFood_1.style.gridColumnStart = val.x;
-    snakeFood_1.style.gridRowStart = val.y;
+    snakeFood_1.style.gridColumnStart = val.y;
+    snakeFood_1.style.gridRowStart = val.x;
     snakeBoard.appendChild(snakeFood_1);
     num++;
-  })
+  });
 }
 
 //The gameLoop begins
@@ -171,40 +178,40 @@ window.addEventListener("keydown", (e) => {
         return;
       }
       currDirectionWASD = "w";
-      inputDirection.x = 0;
-      inputDirection.y = -1;
+      inputDirection.x = -1;
+      inputDirection.y = 0;
       break;
     case "s":
       if (currDirectionWASD === "w" || collided === true) {
         return;
       }
       currDirectionWASD = "s";
-      inputDirection.x = 0;
-      inputDirection.y = 1;
+      inputDirection.x = 1;
+      inputDirection.y = 0;
       break;
     case "a":
       if (currDirectionWASD === "d" || collided === true) {
         return;
       }
       currDirectionWASD = "a";
-      inputDirection.x = -1;
-      inputDirection.y = 0;
+      inputDirection.x = 0;
+      inputDirection.y = -1;
       break;
     case "d":
       if (currDirectionWASD === "a" || collided === true) {
         return;
       }
       currDirectionWASD = "d";
-      inputDirection.x = 1;
-      inputDirection.y = 0;
+      inputDirection.x = 0;
+      inputDirection.y = 1;
       break;
     case "ArrowUp":
       if (currDirection === "ArrowDown" || collided === true) {
         return;
       }
       currDirection = "ArrowUp";
-      inputDirection.x = 0;
-      inputDirection.y = -1;
+      inputDirection.x = -1;
+      inputDirection.y = 0;
       break;
 
     case "ArrowDown":
@@ -212,24 +219,24 @@ window.addEventListener("keydown", (e) => {
         return;
       }
       currDirection = "ArrowDown";
-      inputDirection.x = 0;
-      inputDirection.y = 1;
+      inputDirection.x = 1;
+      inputDirection.y = 0;
       break;
     case "ArrowLeft":
       if (currDirection === "ArrowRight" || collided === true) {
         return;
       }
       currDirection = "ArrowLeft";
-      inputDirection.x = -1;
-      inputDirection.y = 0;
+      inputDirection.x = 0;
+      inputDirection.y = -1;
       break;
     case "ArrowRight":
       if (currDirection === "ArrowLeft" || collided === true) {
         return;
       }
       currDirection = "ArrowRight";
-      inputDirection.x = 1;
-      inputDirection.y = 0;
+      inputDirection.x = 0;
+      inputDirection.y = 1;
       break;
     default:
       break;
